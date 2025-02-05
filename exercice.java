@@ -7,7 +7,7 @@ public class exercice {
         System.out.println("Tableau initial: " + Arrays.toString(nombre));
 
         // Trier le tableau
-        
+        Arrays.sort(nombre);
         System.out.println("Tableau trié: " + Arrays.toString(nombre));
 
         // Trouver min et max
