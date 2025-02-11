@@ -13,7 +13,7 @@ public class CompteBancaire {
         if(montant>0 ){
         this.solde += montant;
         System.out.println(this.titulaire+ " Vous avez déposé " + montant + " euros");
-        System.out.println(this.titulaire+ " Votre nouveau solde est de " + this.solde+);
+        System.out.println(this.titulaire+ " Votre nouveau solde est de " + this.solde+"euros" );
 
     }
 }

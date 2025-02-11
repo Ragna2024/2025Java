@@ -1,11 +1,11 @@
 public class Person {
-string nom;
-int âge;
+  String nom;
+  int âge;
 
 
-public Person()
+public Person() ;
 
-public Person(string nom, int age)
+public Person(String nom, int age)
 
 
 
