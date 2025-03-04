@@ -1,58 +1,69 @@
 package com.monprojet;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
+import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
-    {   
-        String url = "jdbc:mysql://localhost:3306/mabase"; // Remplacer "maBase" par le nom de votre base
-        String utilisateur = "root";
-        String motDePasse = "";
-        Connection connexion = null;
+    {
+        /* On clear la console */
+        System.out.print("\033[H\033[2J");   
+        System.out.flush();
 
         System.out.println( "Hello World!" );
-        try {
-            // Établir la connexion
-            connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
-            System.out.println("Connexion réussie !");
+        Connexion link = new Connexion();
+        GestionUtilisateur gu = new GestionUtilisateur(link);
 
-            try (Connection conn = DriverManager.getConnection(url, "root", "");
-             Statement stmt = conn.createStatement()) {
+        /* On demande à l'utilisateur ce qu'il veut faire */
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
 
-            String sqlInsert = "INSERT INTO utilisateur (nom, email) VALUES ('Alice', 'alice@example.com')";
-            int rowsAffected = stmt.executeUpdate(sqlInsert);
-            System.out.println("Insertion réussie, nombre de lignes affectées : " + rowsAffected);
-
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de l'exécution de l'INSERT : " + e.getMessage());
-        }
-    
-
+        do { 
+            System.out.println("Que voulez vosu faire ?");
+            System.out.println("1 - Lister les utilisateurs");
+            System.out.println("2 - Ajouter un utilisateur");
+            System.out.println("3 - Supprimer un utilisateur");
+            System.out.println("0 - Quitter");
+            choice = sc.nextInt();
             
-        } catch (SQLException e) {
-            System.out.println("Erreur de connexion : " + e.getMessage());
-        } finally { // Toujours fermer la connexion pour éviter les fuites de ressources 
-	        if (connexion != null) { 
-		        try { 
-			        connexion.close(); 
-			        System.out.println("Connexion fermée avec succès."); 
-			    } catch (SQLException e) { 
-				    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage()); 
-				} 
-                
-			} 
-		}
+            System.out.print("\033[H\033[2J");   
+            System.out.flush(); 
+            
+            switch (choice) {
+                case 1:
+                    gu.listUtilisateurs();
+                    System.out.println("---------------------");
+                    break;
 
+                case 2:
+                    System.out.print("Nom de l'utilisateur: ");
+                    sc.nextLine();
+                    String nom = sc.nextLine();
 
-        
+                    System.out.print("Email de l'utilisateur: ");
+                    String email = sc.nextLine();
+
+                    Utilisateur utilisateur = new Utilisateur(nom, email);
+
+                    gu.addUtilisateurs(utilisateur);
+                    System.out.println("---------------------");
+                    break;
+
+                    case 3:
+                    System.out.print("ID de l'utilisateur à supprimer: ");
+                    int id = sc.nextInt();
+                    gu.deleteUtilisateurs(id);
+                    System.out.println("---------------------");
+                    break;   
+                                     
+            
+                default:
+                    System.out.println("Pas d'action pour ce choix !");
+                    break;
+            }
+        } while(choice != 0);
+
+        link.close();
+        sc.close();
     }
 }
-
