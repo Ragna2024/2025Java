@@ -54,8 +54,9 @@ public class App
                     int id = sc.nextInt();
                     gu.deleteUtilisateurs(id);
                     System.out.println("---------------------");
-                    break;   
-                                     
+                    break;
+  
+
             
                 default:
                     System.out.println("Pas d'action pour ce choix !");

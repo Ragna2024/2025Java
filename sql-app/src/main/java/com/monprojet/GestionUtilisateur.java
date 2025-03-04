@@ -7,18 +7,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class GestionUtilisateur {
-    ArrayList<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+    ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
     Connexion link = null;
 
     public GestionUtilisateur(Connexion plink) {
         this.link = plink;
     }
 
-    public void listUtilisateurs () {
+    public void listUtilisateurs() {
         try {
             Statement stmt = this.link.connexion.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id, nom, email FROM utilisateur");
-            System.out.println("Listes des utilisateurs:");
+            System.out.println("Liste des utilisateurs:");
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nom = rs.getString("nom");
@@ -33,7 +33,6 @@ public class GestionUtilisateur {
 
     public void addUtilisateurs(Utilisateur utilisateur) {
         try {
-
             if (utilisateur.isValidNom()) {
                 String sqlInsert = "INSERT INTO utilisateur (nom, email) VALUES (?, ?)";
                 PreparedStatement pstmtInsert = this.link.connexion.prepareStatement(sqlInsert);
@@ -50,31 +49,22 @@ public class GestionUtilisateur {
         } catch (SQLException e) {
             System.out.println("Erreur de connexion : " + e.getMessage());
         }
+    } // <-- Fermeture correcte de addUtilisateurs
 
-
-
-        public void deleteUtilisateurs(int id) {
-            try {
-                String sqlDelete = "DELETE FROM utilisateur WHERE id = ?";
-                PreparedStatement pstmtDelete = this.link.connexion.prepareStatement(sqlDelete);
-                pstmtDelete.setInt(1, id);
-                int affectedRows = pstmtDelete.executeUpdate();
-                
-                if (affectedRows > 0) {
-                    System.out.println("Utilisateur supprimé avec succès.");
-                } else {
-                    System.out.println("Aucun utilisateur trouvé avec cet ID.");
-                }
-            } catch (SQLException e) {
-                System.out.println("Erreur de connexion : " + e.getMessage());
-    }
-}
-    
-
-}   
-
-
-
-
+    public void deleteUtilisateurs(int id) {
+        try {
+            String sqlDelete = "DELETE FROM utilisateur WHERE id = ?";
+            PreparedStatement pstmtDelete = this.link.connexion.prepareStatement(sqlDelete);
+            pstmtDelete.setInt(1, id);
+            int affectedRows = pstmtDelete.executeUpdate();
+            
+            if (affectedRows > 0) {
+                System.out.println("Utilisateur supprimé avec succès.");
+            } else {
+                System.out.println("Aucun utilisateur trouvé avec cet ID.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur de connexion : " + e.getMessage());
+        }
     }
 }
