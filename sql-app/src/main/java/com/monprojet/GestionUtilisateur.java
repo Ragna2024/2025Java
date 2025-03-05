@@ -67,4 +67,67 @@ public class GestionUtilisateur {
             System.out.println("Erreur de connexion : " + e.getMessage());
         }
     }
+
+    public void updateUtilisateur(int id, String newNom, String newEmail) {
+        try {
+            String sqlUpdate = "UPDATE utilisateur SET nom = ?, email = ? WHERE id = ?";
+            PreparedStatement pstmtUpdate = this.link.connexion.prepareStatement(sqlUpdate);
+            pstmtUpdate.setString(1, newNom);
+            pstmtUpdate.setString(2, newEmail);
+            pstmtUpdate.setInt(3, id);
+            int affectedRows = pstmtUpdate.executeUpdate();
+            
+            if (affectedRows > 0) {
+                System.out.println("Utilisateur mis à jour avec succès.");
+            } else {
+                System.out.println("Aucun utilisateur trouvé avec cet ID.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur de connexion : " + e.getMessage());
+        }
+    }
+
+    
+    
+    public void searchUtilisateurByEmail(String email) {
+        try {
+            String sqlSearch = "SELECT id, nom, email FROM utilisateur WHERE email LIKE ?";
+            PreparedStatement pstmtSearch = this.link.connexion.prepareStatement(sqlSearch);
+            pstmtSearch.setString(1, "%" + email + "%");
+            ResultSet rs = pstmtSearch.executeQuery();
+            
+            while (rs.next()) {
+                System.out.println("ID : " + rs.getInt("id") + ", Nom : " + rs.getString("nom") + ", Email : " + rs.getString("email"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur de connexion : " + e.getMessage());
+ }
 }
+
+        
+public void searchUtilisateurByName(String nom) {
+    try {
+        String sqlSearch = "SELECT id, nom, email FROM utilisateur WHERE nom LIKE ?";
+        PreparedStatement pstmtSearch = this.link.connexion.prepareStatement(sqlSearch);
+        pstmtSearch.setString(1, "%" + nom + "%");
+        ResultSet rs = pstmtSearch.executeQuery();
+        
+        while (rs.next()) {
+            System.out.println("ID : " + rs.getInt("id") + ", Nom : " + rs.getString("nom") + ", Email : " + rs.getString("email"));
+        }
+    } catch (SQLException e) {
+        System.out.println("Erreur de connexion : " + e.getMessage());
+    }
+}
+}
+
+
+
+
+
+
+
+
+
+
+

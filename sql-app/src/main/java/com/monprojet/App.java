@@ -23,6 +23,9 @@ public class App
             System.out.println("1 - Lister les utilisateurs");
             System.out.println("2 - Ajouter un utilisateur");
             System.out.println("3 - Supprimer un utilisateur");
+            System.out.println("4 - Modifier un utilisateur");
+            System.out.println("5 - Rechercher un utilisateur par 1(son NOM) ou 2 (son Email)");
+
             System.out.println("0 - Quitter");
             choice = sc.nextInt();
             
@@ -55,6 +58,42 @@ public class App
                     gu.deleteUtilisateurs(id);
                     System.out.println("---------------------");
                     break;
+
+                    case 4:
+                    System.out.print("ID de l'utilisateur à modifier: ");
+                    int editId = sc.nextInt();
+                    sc.nextLine(); // Consommer la ligne restante
+                    
+                    System.out.print("Nouveau nom: ");
+                    String newNom = sc.nextLine();
+                    
+                    System.out.print("Nouvel email: ");
+                    String newEmail = sc.nextLine();
+                    
+                    gu.updateUtilisateur(editId, newNom, newEmail);
+                    System.out.println("---------------------");
+                    break;
+
+                    case 5:
+                    System.out.print("Rechercher par (1: Nom, 2: Email): ");
+                    int searchType = sc.nextInt();
+                    sc.nextLine(); // Consommer la ligne restante
+                    
+                    if (searchType == 1) {
+                        System.out.print("Entrez le nom: ");
+                        String searchNom = sc.nextLine();
+                        gu.searchUtilisateurByName(searchNom);
+                    } else if (searchType == 2) {
+                        System.out.print("Entrez l'email: ");
+                        String searchEmail = sc.nextLine();
+                        gu.searchUtilisateurByEmail(searchEmail);
+                    } else {
+                        System.out.println("Choix invalide.");
+                    }
+                    System.out.println("---------------------");
+                    break;
+
+        
   
 
             
